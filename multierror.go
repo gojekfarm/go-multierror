@@ -9,14 +9,14 @@ import (
 // MultiError implements error interface.
 // An instance of MultiError has zero or more errors.
 type MultiError struct {
-	mutex *sync.Mutex
+	mutex *sync.RWMutex
 	errs  []error
 }
 
 // NewMultiError: returns a thread safe instance of multierror
 func NewMultiError() *MultiError {
 	return &MultiError{
-		mutex: &sync.Mutex{},
+		mutex: &sync.RWMutex{},
 	}
 }
 
@@ -29,6 +29,8 @@ func (m *MultiError) Push(errString string) {
 
 // HasError checks if MultiError has any error.
 func (m *MultiError) HasError() error {
+	m.mutex.RLock()
+	defer m.mutex.RUnlock()
 	if len(m.errs) == 0 {
 		return nil
 	}
@@ -38,6 +40,8 @@ func (m *MultiError) HasError() error {
 
 // Error implements error interface.
 func (m *MultiError) Error() string {
+	m.mutex.RLock()
+	defer m.mutex.RUnlock()
 	formattedError := make([]string, len(m.errs))
 	for i, e := range m.errs {
 		formattedError[i] = e.Error()
