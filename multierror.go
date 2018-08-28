@@ -1,6 +1,7 @@
 package multierror
 
 import (
+	"fmt"
 	"errors"
 	"strings"
 	"sync"
@@ -38,10 +39,10 @@ func (m *MultiError) HasError() error {
 
 // Error implements error interface.
 func (m *MultiError) Error() string {
-	formattedError := make([]string, len(m.errs))
+	formattedError := ""
 	for i, e := range m.errs {
-		formattedError[i] = e.Error()
+		formattedError += fmt.Sprintf("%d. %s", i+1, e.Error())
 	}
 
-	return strings.Join(formattedError, ", ")
+	return formattedError
 }
