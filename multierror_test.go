@@ -9,7 +9,7 @@ import (
 )
 
 func TestMultiErrorValidation(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{mutex: new(sync.RWMutex)}
 	me.Push("one")
 	me.Push("two")
 
@@ -19,7 +19,7 @@ func TestMultiErrorValidation(t *testing.T) {
 }
 
 func TestMultiErrorRespresentation(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{mutex: new(sync.RWMutex)}
 	me.Push("one")
 	me.Push("two")
 
@@ -31,7 +31,7 @@ func TestMultiErrorRespresentation(t *testing.T) {
 }
 
 func TestMultiErrorWithoutErrorsValidationIsNil(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{mutex: new(sync.RWMutex)}
 
 	err := me.HasError()
 
@@ -39,7 +39,7 @@ func TestMultiErrorWithoutErrorsValidationIsNil(t *testing.T) {
 }
 
 func TestMultiErrorRespresentationIsEmpty(t *testing.T) {
-	me := &MultiError{mutex: new(sync.Mutex)}
+	me := &MultiError{mutex: new(sync.RWMutex)}
 
 	res := me.Error()
 
