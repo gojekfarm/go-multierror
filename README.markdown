@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gojek-engineering/go-multierror.svg?branch=master)](https://travis-ci.org/gojek-engineering/go-multierror)
+[![Build Status](https://travis-ci.org/gojekfarm/go-multierror.svg?branch=master)](https://travis-ci.org/gojekfarm/go-multierror)
 
 # multierror
 --
